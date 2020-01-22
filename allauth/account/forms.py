@@ -69,8 +69,8 @@ class PasswordField(forms.CharField):
         render_value = kwargs.pop('render_value',
                                   app_settings.PASSWORD_INPUT_RENDER_VALUE)
         kwargs['widget'] = forms.PasswordInput(render_value=render_value,
-                                               attrs={'placeholder':
-                                                      kwargs.get("label")})
+                                               attrs={'placeholder': kwargs.get("label"),
+                                               'class': 'form-control'})
         super(PasswordField, self).__init__(*args, **kwargs)
 
 
@@ -109,16 +109,16 @@ class LoginForm(forms.Form):
         super(LoginForm, self).__init__(*args, **kwargs)
         if app_settings.AUTHENTICATION_METHOD == AuthenticationMethod.EMAIL:
             login_widget = forms.TextInput(attrs={'type': 'email',
-                                                  'placeholder':
-                                                  _('E-mail address'),
-                                                  'autofocus': 'autofocus'})
+                                                  'placeholder': _('E-mail address'),
+                                                  'autofocus': 'autofocus',
+                                                  'class': 'form-control'})
             login_field = forms.EmailField(label=_("E-mail"),
                                            widget=login_widget)
         elif app_settings.AUTHENTICATION_METHOD \
                 == AuthenticationMethod.USERNAME:
-            login_widget = forms.TextInput(attrs={'placeholder':
-                                                  _('Username'),
-                                                  'autofocus': 'autofocus'})
+            login_widget = forms.TextInput(attrs={'placeholder': _('Username'),
+                                                  'autofocus': 'autofocus',
+                                                  'class': 'form-control'})
             login_field = forms.CharField(
                 label=_("Username"),
                 widget=login_widget,
@@ -126,9 +126,9 @@ class LoginForm(forms.Form):
         else:
             assert app_settings.AUTHENTICATION_METHOD \
                 == AuthenticationMethod.USERNAME_EMAIL
-            login_widget = forms.TextInput(attrs={'placeholder':
-                                                  _('Username or e-mail'),
-                                                  'autofocus': 'autofocus'})
+            login_widget = forms.TextInput(attrs={'placeholder': _('Username or e-mail'),
+                                                  'autofocus': 'autofocus',
+                                                  'class': 'form-control'})
             login_field = forms.CharField(label=pgettext("field label",
                                                          "Login"),
                                           widget=login_widget)
@@ -260,12 +260,13 @@ class BaseSignupForm(_base_signup_form_class()):
     username = forms.CharField(label=_("Username"),
                                min_length=app_settings.USERNAME_MIN_LENGTH,
                                widget=forms.TextInput(
-                                   attrs={'placeholder':
-                                          _('Username'),
-                                          'autofocus': 'autofocus'}))
+                                   attrs={'placeholder': _('Username'),
+                                          'autofocus': 'autofocus',
+                                          'class': 'form-control'}))
     email = forms.EmailField(widget=forms.TextInput(
         attrs={'type': 'email',
-               'placeholder': _('E-mail address')}))
+               'placeholder': _('E-mail address'),
+               'class': 'form-control'}))
 
     def __init__(self, *args, **kwargs):
         email_required = kwargs.pop('email_required',
@@ -293,7 +294,8 @@ class BaseSignupForm(_base_signup_form_class()):
                 widget=forms.TextInput(
                     attrs={
                         'type': 'email',
-                        'placeholder': _('E-mail address confirmation')
+                        'placeholder': _('E-mail address confirmation'),
+                        'class': 'form-control'
                     }
                 )
             )
@@ -423,7 +425,8 @@ class AddEmailForm(UserForm):
         widget=forms.TextInput(
             attrs={"type": "email",
                    "size": "30",
-                   "placeholder": _('E-mail address')}))
+                   "placeholder": _('E-mail address'),
+                   "class": "form-conrol"}))
 
     def clean_email(self):
         value = self.cleaned_data["email"]
@@ -493,6 +496,7 @@ class ResetPasswordForm(forms.Form):
             "type": "email",
             "size": "30",
             "placeholder": _("E-mail address"),
+            "class": "form-control"
         })
     )
 
