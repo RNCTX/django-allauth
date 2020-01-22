@@ -426,7 +426,7 @@ class AddEmailForm(UserForm):
             attrs={"type": "email",
                    "size": "30",
                    "placeholder": _('E-mail address'),
-                   "class": "form-conrol"}))
+                   "class": "form-control"}))
 
     def clean_email(self):
         value = self.cleaned_data["email"]
