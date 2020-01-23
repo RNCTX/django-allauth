@@ -90,8 +90,8 @@ class LoginForm(forms.Form):
 
     password = PasswordField(label=_("Password"))
     remember = forms.BooleanField(label=_("Remember Me"),
-                                  required=False)
-
+                                  required=False, 
+                                  initial=True)
     user = None
     error_messages = {
         'account_inactive':
